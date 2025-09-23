@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>OCR – Extraire du texte</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        header {
+            background: linear-gradient(90deg, #4f46e5, #6d28d9);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .btn-custom {
+            background-color: #4f46e5;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #3730a3;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .result-box {
+            background-color: #f1f3f5;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+
+        .error-text {
+            color: red;
+            font-weight: 500;
+        }
+
+        /* Style pour inverser label et champ */
+        .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            margin-left: 1rem;
+            min-width: 150px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="fw-bold">OCR – Extraire du texte à partir d’une image</h1>
+    </header>
+
+    <main class="container my-5">
+        <div class="form-container">
+            <form method="POST" enctype="multipart/form-data">
+                
+                {% csrf_token %}
+                
+                <!-- Custom rendering of form fields with label on the right -->
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field }}
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    </div>
+                {% endfor %}
+
+                <!-- Boutons côte à côte -->
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="submit" class="btn btn-custom"> Extraire le texte</button>
+                    <a href="{% url 'home' %}" class="btn btn-outline-secondary">Retour à l’accueil</a>
+                </div>
+            </form>
+
+            {% if error %}
+                <p class="error-text mt-4">Erreur : {{ error }}</p>
+            {% endif %}
+
+            {% if result %}
+                <h3 class="mt-5">Résultat :</h3>
+                <div class="result-box mt-2">
+                    {{ result }}
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
