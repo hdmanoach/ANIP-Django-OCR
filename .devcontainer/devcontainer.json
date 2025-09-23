@@ -1,0 +1,9 @@
+{
+  "name": "ANIP Django OCR",
+  "image": "mcr.microsoft.com/devcontainers/python:3.10",
+  "features": {},
+  "postCreateCommand": "pip install django deepface opencv-python pytesseract",
+  "forwardPorts": [8000],
+  "workspaceFolder": "/workspace",
+  "settings": {}
+}
